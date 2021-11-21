@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,7 +24,18 @@ public class User {
     @Column(length = 500)
     private String biography;
 
-//    private boolean isAdmin;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
+    @JsonManagedReference
+    private Recipe recipe;
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 
     //Getters and Setters//
 
@@ -65,4 +78,5 @@ public class User {
     public void setBiography(String biography) {
         this.biography = biography;
     }
+
 }
