@@ -1,9 +1,28 @@
-INSERT INTO users (id, biography, email_address, password, user_name, recipe_id)
-VALUES (1, 'Hallo ik ben christina', 'Christina@gmail.com', 'xxx', 'Guseva', 1),
-       (2, 'Hallo ik ben jacques', 'Jacques@gmail.com','xxx', 'Peters', 2);
+INSERT INTO users (email, password, username)
+VALUES ('1@test.com', 'xxx', 'chris'),
+       ('2@test.com', 'xxx', 'jacques'),
+       ('3@test.com', 'xxx', 'merlin'),
+       ('4@test.com', 'xxx', 'valentijn');
 
-insert into recipes (id, title, ingredients, description, is_private)
-values
-    (1, 'Pasta', 'Pasta, water, room, tomaten', 'kook het water en leg de pasta er in', false),
-    (2, 'Cake', 'bloem, eieren, bakpoeder, kaneel, vanille', 'meng de eieren en de bloem samen tot 1 geheel', true),
-    (2, 'Oesters', 'Oesters 12 stuks, rode ui, rode wijn azijn', 'breek de oesters open, snipper de ui en meng het met de rode wijnazijn', true);
+INSERT INTO autority_roles (role_name) VALUES ('ROLE_USER');
+INSERT INTO autority_roles (role_name) VALUES ('ROLE_ADMIN');
+
+INSERT INTO user_roles(user_id, authority_role_id) VALUES ('1', '2');
+INSERT INTO user_roles(user_id, authority_role_id) VALUES ('2', '2');
+INSERT INTO user_roles(user_id, authority_role_id) VALUES ('3', '1');
+INSERT INTO user_roles(user_id, authority_role_id) VALUES ('4', '1');
+
+INSERT INTO recipes (recipe_description, recipe_ingredient, recipe_is_private, recipe_name, user_id)
+VALUES ('koken en bakken','kaas en tomaat', true ,'vega', 1),
+       ('waterkoken','spagettie', false ,'spagettie citroen', 2),
+       ('oven aanzetten..','pizzadeeg', true ,'pizza tonno', 3),
+       ('pan op het vuur','karbonade', false ,'hollandse keuken', 4);
+
+INSERT INTO comments (comment_id, comment, recipe_id, user_id)
+VALUES (1, 'dit was lekker', 1, 3),
+       (2, 'niet was niet lekker', 4, 1),
+       (3, 'dit ga ik aanraden', 3, 3);
+
+
+
+

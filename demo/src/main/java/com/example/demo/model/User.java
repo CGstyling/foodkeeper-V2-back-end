@@ -1,8 +1,10 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -10,57 +12,74 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long userId;
 
-    @Column(length = 80)
-    private String userName;
+    @Column(length = 50, nullable = false)
+    private String username;
 
-    @Column(length = 80)
-    private String emailAddress;
+    @Column(length = 75, nullable = false)
+    @Email
+    private String email;
 
-    @Column(length = 80)
+    @Column(length = 125, nullable = false)
     private String password;
 
-    @Column(length = 500)
-    private String biography;
+    @JsonIgnore
+    @OneToMany(
+            targetEntity = Recipe.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private List<Recipe> recipes;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "recipe_id", nullable = false)
-    @JsonManagedReference
-    private Recipe recipe;
+    @JsonIgnore
+    @OneToMany(
+            targetEntity = Comment.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Comment> comments;
 
-    public Recipe getRecipe() {
-        return recipe;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name ="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_role_id"))
+    private Set<AuthorityRole> authorityRoles = new HashSet<>();
+
+    public User() {
+    }
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    public Long getUserId() {
+        return userId;
     }
 
-    //Getters and Setters//
-
-    public Long getId() {
-        return id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getEmail() {
+        return email;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -71,12 +90,27 @@ public class User {
         this.password = password;
     }
 
-    public String getBiography() {
-        return biography;
+    public List<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setBiography(String biography) {
-        this.biography = biography;
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
+    public Set<AuthorityRole> getAuthorityRoles() {
+        return authorityRoles;
+    }
+
+    public void setAuthorityRoles(Set<AuthorityRole> authorityRoles) {
+        this.authorityRoles = authorityRoles;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

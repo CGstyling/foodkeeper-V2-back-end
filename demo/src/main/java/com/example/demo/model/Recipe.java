@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,65 +9,81 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long recipeId;
 
-    private String title;
-    private String ingredients;
-    private String description;
-    private boolean isPrivate;
+    @Column(length = 100, nullable = false)
+    private String recipeName;
 
-    @OneToMany(mappedBy = "recipe",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<User> users;
+    @Column(length = 5000, nullable = false)
+    private String recipeIngredient;
 
-    public long getId() {
-        return id;
+    @Column(length = 5000, nullable = false)
+    private String recipeDescription;
+
+    @Column(nullable= false)
+    private boolean recipeIsPrivate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+    @OneToMany(
+            targetEntity = Comment.class,
+            mappedBy = "recipes",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Comment> comments;
+
+    public long getRecipeId() {
+        return recipeId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setRecipeId(long recipeId) {
+        this.recipeId = recipeId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getRecipeName() {
+        return recipeName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
     }
 
-    public String getIngredients() {
-        return ingredients;
+    public String getRecipeIngredient() {
+        return recipeIngredient;
     }
 
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
+    public void setRecipeIngredient(String recipeIngredient) {
+        this.recipeIngredient = recipeIngredient;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRecipeDescription() {
+        return recipeDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRecipeDescription(String recipeDescription) {
+        this.recipeDescription = recipeDescription;
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
+    public boolean isRecipeIsPrivate() {
+        return recipeIsPrivate;
     }
 
-    public void setPrivate(boolean aPrivate) {
-        isPrivate = aPrivate;
+    public void setRecipeIsPrivate(boolean recipeIsPrivate) {
+        this.recipeIsPrivate = recipeIsPrivate;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public void setRecipeId(Long recipeId) {
+        this.recipeId = recipeId;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public User getUser() {
+        return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
