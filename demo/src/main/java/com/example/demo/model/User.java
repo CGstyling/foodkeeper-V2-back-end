@@ -47,8 +47,8 @@ public class User {
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name ="user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_role_id"))
-    private Set<AuthorityRole> authorityRoles = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
+    private Set<AuthRole> authRoles = new HashSet<>();
 
     public User() {
     }
@@ -98,12 +98,12 @@ public class User {
         this.recipes = recipes;
     }
 
-    public Set<AuthorityRole> getAuthorityRoles() {
-        return authorityRoles;
+    public Set<AuthRole> getAuthRoles() {
+        return authRoles;
     }
 
-    public void setAuthorityRoles(Set<AuthorityRole> authorityRoles) {
-        this.authorityRoles = authorityRoles;
+    public void setAuthRoles(Set<AuthRole> authRoles) {
+        this.authRoles = authRoles;
     }
 
     public List<Comment> getComments() {

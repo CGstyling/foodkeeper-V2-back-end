@@ -9,14 +9,14 @@ public class AuthenticationResponse {
     private Long userId;
     private String username;
     private String email;
-    private List<String> authorityRole;
+    private List<String> authRole;
 
-    public AuthenticationResponse(String accessToken, Long userId, String username, String email, List<String> authorityRole) {
+    public AuthenticationResponse(String accessToken, Long userId, String username, String email, List<String> authRole) {
         this.token = accessToken;
         this.userId = userId;
         this.username = username;
         this.email = email;
-        this.authorityRole = authorityRole;
+        this.authRole = authRole;
     }
 
     public String getAccessToken() {
@@ -59,11 +59,11 @@ public class AuthenticationResponse {
         this.email = email;
     }
 
-    public List<String> getAuthorityRole() {
-        return authorityRole;
+    public List<String> getAuthRole() {
+        return authRole;
     }
 
-    public void setAuthorityRole(List<String> authorityRole) {
-        this.authorityRole = authorityRole;
+    public void setAuthRole(List<String> authorityRole) {
+        this.authRole = authRole;
     }
 }

@@ -3,8 +3,8 @@ package com.example.demo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Autority_roles")
-public class AuthorityRole {
+@Table(name = "Auth_roles")
+public class AuthRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +12,6 @@ public class AuthorityRole {
 
     @Enumerated(EnumType.STRING) //make string from the roles
     @Column(length = 25)
-    private EAuthorityRole roleName;
+    private EAuthRole roleName;
 
 }

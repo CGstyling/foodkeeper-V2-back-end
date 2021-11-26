@@ -20,15 +20,15 @@ public class UserSignUpRequest {
     @Email
     private String email;
 
-    private Set<String> authorityRole;
+    private Set<String> authRole;
 
     public UserSignUpRequest() {
     }
-    public UserSignUpRequest(String username, String password, String email, Set<String> authorityRole) {
+    public UserSignUpRequest(String username, String password, String email, Set<String> authRole) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.authorityRole = authorityRole;
+        this.authRole = authRole;
     }
     public String getUsername() {
         return username;
@@ -48,10 +48,10 @@ public class UserSignUpRequest {
     public void setEmail(String email) {
         this.email = email;
     }
-    public Set<String> getAuthorityRole() {
-        return authorityRole;
+    public Set<String> getAuthRole() {
+        return authRole;
     }
-    public void setAuthorityRole(Set<String> authorityRole) {
-        this.authorityRole = authorityRole;
+    public void setAuthRole(Set<String> authRole) {
+        this.authRole = authRole;
     }
 }

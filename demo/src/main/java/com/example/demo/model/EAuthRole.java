@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public enum EAuthorityRole {
+public enum EAuthRole {
     ROLE_USER,
     ROLE_ADMIN
 }

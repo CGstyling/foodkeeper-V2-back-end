@@ -1,14 +1,11 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.AuthorityRole;
-import com.example.demo.model.EAuthorityRole;
+import com.example.demo.model.AuthRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface AuthorityRoleRepository extends JpaRepository<AuthorityRole, Long> {
+public interface AuthRoleRepository extends JpaRepository<AuthRole, Long> {
 
 //    Optional<AuthorityRole> findByName(EAuthorityRole name); //make methods in auth controller/service
 }
