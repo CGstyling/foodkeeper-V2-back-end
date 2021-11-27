@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,15 +25,21 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public Optional<User> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public Optional<User> getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
     }
 
-    @PutMapping("/users/{id}")
+    @DeleteMapping("/users/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+    }
+
+    @PutMapping("/users/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public void updateUser(@PathVariable Long userId, @RequestBody User user) {
+        userService.updateUser(userId, user);
     }
 }
