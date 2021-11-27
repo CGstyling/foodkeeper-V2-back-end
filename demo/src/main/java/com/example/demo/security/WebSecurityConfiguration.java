@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,21 +26,24 @@ import static org.springframework.http.HttpMethod.*;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
-    private JwtRequestFilter jwtRequestFilter;
-
-    WebSecurityConfiguration(DataSource dataSource, JwtRequestFilter jwtRequestFilter) {
-        this.dataSource = dataSource;
-        this.jwtRequestFilter = jwtRequestFilter;
+    private final UserDetailServiceImpl userDetailsService;
+    private JwtEntryPoint unauthorizedHandler;
+    WebSecurityConfiguration(UserDetailServiceImpl userDetailsService, JwtEntryPoint unauthorizedHandler) {
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, authority FROM authorities AS a WHERE username=?");
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
+    @Bean
+    public JwtRequestFilter authenticationJwtTokenFilter() {
+        return new JwtRequestFilter();
     }
 
     @Bean
@@ -64,21 +68,23 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers(PATCH,"/users/{^[\\w]$}/password").authenticated()
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/customers/**").hasRole("USER")
-                .antMatchers(POST,"/authenticate").permitAll()
-                .antMatchers(GET,"/public").permitAll()
-                .anyRequest().denyAll()
+                .csrf()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
                 .and()
-                .csrf().disable()
-                .formLogin().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/admin/**").permitAll()
+                .antMatchers(PATCH,"/users/**").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin().disable();
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
