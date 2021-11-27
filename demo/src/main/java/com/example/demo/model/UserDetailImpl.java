@@ -1,28 +1,30 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.demo.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDetailImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String username;
-    private String email;
+    private final Long userId;
+    private final String username;
+    private final String email;
 
     @JsonIgnore
-    private String password;
+    private final String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailImpl(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+    public UserDetailImpl(Long userId, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -46,30 +48,46 @@ public class UserDetailImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
+    }
+    public Long getUserId() {
+        return userId;
+    }
+    public String getEmail() {
+        return email;
     }
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserDetailImpl user = (UserDetailImpl) o;
+        return Objects.equals(userId, user.userId);
     }
 }

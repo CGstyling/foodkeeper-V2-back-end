@@ -15,6 +15,7 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     public UserService(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
@@ -26,18 +27,22 @@ public class UserService {
     }
     //get user by id
     public Optional<User> getUserById(Long id) {
+
         return userRepository.findById(id);
     }
     //add user
     public void addUser(User user) {
+
         userRepository.save(user);
     }
     //update user
     public void updateUser(User user) {
+
         userRepository.save(user);
     }
     //delete user
     public void deleteUser(Long id) {
+
         userRepository.deleteById(id);
     }
 
