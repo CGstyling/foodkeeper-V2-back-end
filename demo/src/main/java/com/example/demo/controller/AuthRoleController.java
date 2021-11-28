@@ -19,10 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/foodkeeper")
 public class AuthRoleController {
 
@@ -39,6 +37,7 @@ public class AuthRoleController {
     JwtUtil jwtUtil;
     PasswordEncoder passwordEncoder;
     AuthenticationManager authenticationManager;
+
     public AuthRoleController(AuthRoleRepository authRoleRepository, UserRepository userRepository, JwtUtil jwtUtil, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.authRoleRepository = authRoleRepository;
         this.userRepository = userRepository;
@@ -84,7 +83,8 @@ public class AuthRoleController {
         }
 
         //Create new user and give role
-        User user = new User(userSignUpRequest.getUsername(),
+        User user = new User(
+                userSignUpRequest.getUsername(),
                 userSignUpRequest.getEmail(),
                 passwordEncoder.encode(userSignUpRequest.getPassword()));
 
@@ -97,22 +97,20 @@ public class AuthRoleController {
             authRoles.add(userRole);
         } else {
             setRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        AuthRole adminRole = AuthRoleRepository.findByName(EAuthRole.ROLE_ADMIN)
-                                .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
-                        authRoles.add(adminRole);
-                        break;
-                    default:
-                        AuthRole userRole = AuthRoleRepository.findByName(EAuthRole.ROLE_USER)
-                                .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
-                        authRoles.add(userRole);
+                if ("admin".equals(role)) {
+                    AuthRole adminRole = AuthRoleRepository.findByName(EAuthRole.ROLE_ADMIN)
+                            .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
+                    authRoles.add(adminRole);
+                } else {
+                    AuthRole userRole = AuthRoleRepository.findByName(EAuthRole.ROLE_USER)
+                            .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
+                    authRoles.add(userRole);
                 }
             });
         }
 
         user.setAuthRoles(authRoles);
         userRepository.save(user);
-        return ResponseEntity.ok("User made account!");
+        return ResponseEntity.ok("User made an account!");
     }
 }

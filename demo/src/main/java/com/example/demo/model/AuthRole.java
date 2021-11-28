@@ -8,18 +8,18 @@ public class AuthRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long authorityRoleId;
+    private Long authRoleId;
 
     @Enumerated(EnumType.STRING) //make string from the roles
     @Column(length = 25)
     private EAuthRole roleName;
 
-    public Long getAuthorityRoleId() {
-        return authorityRoleId;
+    public Long getAuthRoleId() {
+        return authRoleId;
     }
 
-    public void setAuthorityRoleId(Long authorityRoleId) {
-        this.authorityRoleId = authorityRoleId;
+    public void setAuthRoleId(Long authRoleId) {
+        this.authRoleId = authRoleId;
     }
 
     public EAuthRole getRoleName() {

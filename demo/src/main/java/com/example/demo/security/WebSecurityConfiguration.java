@@ -27,7 +27,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private final UserDetailServiceImpl userDetailsService;
-    private JwtEntryPoint unauthorizedHandler;
+    private final JwtEntryPoint unauthorizedHandler;
     WebSecurityConfiguration(UserDetailServiceImpl userDetailsService, JwtEntryPoint unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
@@ -66,7 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic()
+                .cors()
                 .and()
                 .csrf()
                 .disable()

@@ -44,7 +44,7 @@ public class Recipe {
     }
 
     public String getRecipeName() {
-        return recipeName;
+        return this.recipeName;
     }
 
     public void setRecipeName(String recipeName) {
@@ -86,4 +86,5 @@ public class Recipe {
     public void setUser(User user) {
         this.user = user;
     }
+
 }
