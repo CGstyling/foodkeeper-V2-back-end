@@ -92,17 +92,17 @@ public class AuthRoleController {
         Set<AuthRole> authRoles = new HashSet<>();
 
         if(setRoles== null) {
-            AuthRole userRole = AuthRoleRepository.findByName(EAuthRole.ROLE_USER)
+            AuthRole userRole = authRoleRepository.findByRoleName(EAuthRole.ROLE_USER)
                     .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
             authRoles.add(userRole);
         } else {
             setRoles.forEach(role -> {
                 if ("admin".equals(role)) {
-                    AuthRole adminRole = AuthRoleRepository.findByName(EAuthRole.ROLE_ADMIN)
+                    AuthRole adminRole = authRoleRepository.findByRoleName(EAuthRole.ROLE_ADMIN)
                             .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
                     authRoles.add(adminRole);
                 } else {
-                    AuthRole userRole = AuthRoleRepository.findByName(EAuthRole.ROLE_USER)
+                    AuthRole userRole = authRoleRepository.findByRoleName(EAuthRole.ROLE_USER)
                             .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
                     authRoles.add(userRole);
                 }

@@ -11,8 +11,5 @@ import java.util.Optional;
 public interface AuthRoleRepository extends JpaRepository<AuthRole, Long> {
 
 //    Optional<AuthRole> find
-    static Optional<AuthRole> findByName(EAuthRole name) //make methods in auth controller/service
-    {
-        return null;
-    }
+    Optional<AuthRole> findByRoleName(EAuthRole name); //make methods in auth controller/service
 }
