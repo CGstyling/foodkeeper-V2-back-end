@@ -1,7 +1,54 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.model.Recipe;
+import com.example.demo.service.RecipeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/foodkeeper")
 public class RecipeController {
+
+    @Autowired
+    private final RecipeService recipeService;
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
+    @GetMapping("/recipes")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public List<Recipe> getAllRecipes() {
+        return recipeService.getAllRecipes();
+    }
+
+    @GetMapping("/recipes/{recipeId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Optional<Recipe> getRecipeById(@PathVariable Long recipeId) {
+        return recipeService.getRecipeById(recipeId);
+    }
+
+    @PostMapping("/recipes")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> addRecipe(@RequestBody Recipe recipe) {
+        recipeService.addRecipe(recipe);
+        return ResponseEntity.ok("recept is aangemaakt");
+    }
+
+    @DeleteMapping("/recipes/{recipeId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public void deleteRecipe(@PathVariable Long recipeId) {
+        recipeService.deleteRecipe(recipeId);
+    }
+
+    @PutMapping("/recipes/{recipeId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public void updateRecipe(@PathVariable Long recipeId, @RequestBody Recipe recipe) {
+        recipeService.updateRecipe(recipe, recipeId);
+    }
+
 }

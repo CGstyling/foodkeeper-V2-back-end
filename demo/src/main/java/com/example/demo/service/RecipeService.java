@@ -26,7 +26,7 @@ public class RecipeService {
     }
 
     //get all recipes
-    public List<Recipe> getRecipes() {
+    public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
@@ -56,12 +56,18 @@ public class RecipeService {
             recipe.setRecipeName(updateRecipe.getRecipeName());
             recipe.setRecipeIngredient(updateRecipe.getRecipeIngredient());
             recipe.setRecipeDescription(updateRecipe.getRecipeDescription());
+            recipe.setRecipeIsPrivate(updateRecipe.isRecipeIsPrivate());
+            recipeRepository.save(recipe);
         }
-
     }
+
     //delete delete
-    public void deleteRecipe(Long id) {
-        recipeRepository.deleteById(id);
+    public void deleteRecipe(Long recipeId) {
+        if(!recipeRepository.existsById(recipeId)){
+            throw new RecipeNotFoundException("Recipe not found");
+        }else {
+            recipeRepository.deleteById(recipeId);
+        }
     }
 
     //getRecipesByUserId
