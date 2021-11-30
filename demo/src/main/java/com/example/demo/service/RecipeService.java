@@ -73,17 +73,19 @@ public class RecipeService {
     }
 
     //block recipe (admin only)
-//    public void blockRecipe(Recipe blockRecipe, Long recipeId) {
-//
-//        Optional<Recipe> blockOptionalRecipe = recipeRepository.findById(recipeId);
-//
-//        if(blockOptionalRecipe.isEmpty()) {
-//            throw new RecipeNotFoundException("recipe not found");
-//        } else {
-//            Recipe recipe = blockOptionalRecipe.get();
-//            recipe.setBlockRecipe(blockRecipe.isBlockRecipe());
-//            recipeRepository.save(recipe);
-//        }
-//    }
+    public void blockRecipe(Recipe blockRecipe, Long recipeId) {
+
+        Optional<Recipe> blockOptionalRecipe = recipeRepository.findById(recipeId);
+
+        if(blockOptionalRecipe.isEmpty()) {
+            throw new RecipeNotFoundException("recipe not found");
+        } else {
+            Recipe recipe = blockOptionalRecipe.get();
+            recipe.setBlockRecipe(blockRecipe.isBlockRecipe());
+            recipeRepository.save(recipe);
+        }
+
+
+    }
 
 }

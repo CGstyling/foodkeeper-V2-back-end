@@ -23,8 +23,8 @@ public class Recipe {
     @Column(nullable= false)
     private boolean recipeIsPrivate;
 
-//    @Column(nullable= false)
-//    private boolean blockRecipe;
+    @Column(nullable= false, columnDefinition = "boolean default false")
+    private boolean blockRecipe = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
@@ -78,13 +78,13 @@ public class Recipe {
         this.recipeIsPrivate = recipeIsPrivate;
     }
 
-//    public boolean isBlockRecipe() {
-//        return blockRecipe;
-//    }
-//
-//    public void setBlockRecipe(boolean blockRecipe) {
-//        this.blockRecipe = blockRecipe;
-//    }
+    public boolean isBlockRecipe() {
+        return blockRecipe;
+    }
+
+    public void setBlockRecipe(boolean blockRecipe) {
+        this.blockRecipe = blockRecipe;
+    }
 
     public void setRecipeId(Long recipeId) {
         this.recipeId = recipeId;

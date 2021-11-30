@@ -54,9 +54,9 @@ public class RecipeController {
         recipeService.updateRecipe(recipe, recipeId);
     }
 
-//    @PutMapping("/recipes/{recipeId}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public void blockRecipe(@PathVariable Long recipeId, @RequestBody Recipe recipe) {
-//        recipeService.blockRecipe(recipe, recipeId);
-//    }
+    @PatchMapping("/recipes/{recipeId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void blockRecipe(@PathVariable Long recipeId, @RequestBody Recipe recipe) {
+        recipeService.blockRecipe(recipe, recipeId);
+    }
 }
