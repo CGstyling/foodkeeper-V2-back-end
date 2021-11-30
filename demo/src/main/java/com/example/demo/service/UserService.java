@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.RecipeNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.model.Recipe;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +62,13 @@ public class UserService {
         }
     }
 
+    //getRecipesByUserId
+    public Iterable<Recipe> getRecipesByUserId(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()) {
+            return user.get().getRecipes();
+        }else {
+            throw new RecipeNotFoundException("User with all the recipes is not found");
+        }
+    }
 }

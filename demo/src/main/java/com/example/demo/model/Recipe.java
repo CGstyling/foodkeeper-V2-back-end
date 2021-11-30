@@ -23,6 +23,9 @@ public class Recipe {
     @Column(nullable= false)
     private boolean recipeIsPrivate;
 
+//    @Column(nullable= false)
+//    private boolean blockRecipe;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
@@ -35,7 +38,7 @@ public class Recipe {
     )
     private List<Comment> comments;
 
-    public long getRecipeId() {
+    public Long getRecipeId() {
         return recipeId;
     }
 
@@ -74,6 +77,14 @@ public class Recipe {
     public void setRecipeIsPrivate(boolean recipeIsPrivate) {
         this.recipeIsPrivate = recipeIsPrivate;
     }
+
+//    public boolean isBlockRecipe() {
+//        return blockRecipe;
+//    }
+//
+//    public void setBlockRecipe(boolean blockRecipe) {
+//        this.blockRecipe = blockRecipe;
+//    }
 
     public void setRecipeId(Long recipeId) {
         this.recipeId = recipeId;

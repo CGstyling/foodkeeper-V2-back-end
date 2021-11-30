@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Recipe;
 import com.example.demo.service.RecipeService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,8 +17,10 @@ public class RecipeController {
 
     @Autowired
     private final RecipeService recipeService;
-    public RecipeController(RecipeService recipeService) {
+    private final UserService userService;
+    public RecipeController(RecipeService recipeService, UserService userService) {
         this.recipeService = recipeService;
+        this.userService = userService;
     }
 
     @GetMapping("/recipes")
@@ -33,7 +36,7 @@ public class RecipeController {
     }
 
     @PostMapping("/recipes")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> addRecipe(@RequestBody Recipe recipe) {
         recipeService.addRecipe(recipe);
         return ResponseEntity.ok("recept is aangemaakt");
@@ -51,4 +54,9 @@ public class RecipeController {
         recipeService.updateRecipe(recipe, recipeId);
     }
 
+//    @PutMapping("/recipes/{recipeId}")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public void blockRecipe(@PathVariable Long recipeId, @RequestBody Recipe recipe) {
+//        recipeService.blockRecipe(recipe, recipeId);
+//    }
 }

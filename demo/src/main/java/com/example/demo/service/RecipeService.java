@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.exception.RecipeNotFoundException;
 import com.example.demo.model.Recipe;
+import com.example.demo.model.User;
 import com.example.demo.repository.AuthRoleRepository;
 import com.example.demo.repository.RecipeRepository;
 import com.example.demo.repository.UserRepository;
@@ -40,7 +41,8 @@ public class RecipeService {
 
     //add recipe
     public Recipe addRecipe(Recipe recipe) {
-        return recipeRepository.save(recipe);
+       recipe = recipeRepository.save(recipe);
+       return(recipe);
         //=> INSERT INTO recipes (..,..,) VALUES ('','','')
     }
 
@@ -70,8 +72,18 @@ public class RecipeService {
         }
     }
 
-    //getRecipesByUserId
-
-    //blockRecipes
+    //block recipe (admin only)
+//    public void blockRecipe(Recipe blockRecipe, Long recipeId) {
+//
+//        Optional<Recipe> blockOptionalRecipe = recipeRepository.findById(recipeId);
+//
+//        if(blockOptionalRecipe.isEmpty()) {
+//            throw new RecipeNotFoundException("recipe not found");
+//        } else {
+//            Recipe recipe = blockOptionalRecipe.get();
+//            recipe.setBlockRecipe(blockRecipe.isBlockRecipe());
+//            recipeRepository.save(recipe);
+//        }
+//    }
 
 }
