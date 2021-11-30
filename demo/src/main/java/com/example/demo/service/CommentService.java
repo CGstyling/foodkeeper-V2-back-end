@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Recipe;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,29 +15,38 @@ import java.util.Optional;
 public class CommentService {
 
     @Autowired
-    CommentRepository commentRepository;
-    public CommentService(CommentRepository commentRepository) {
+    private final CommentRepository commentRepository;
+    private final RecipeRepository recipeRepository;
+    public CommentService(CommentRepository commentRepository, RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
         this.commentRepository = commentRepository;
     }
 
     //get all comments
-    public List<Comment> getAllComment() {
-        List<Comment> comments = new ArrayList<>();
-        commentRepository.findAll().forEach(comments::add);
-        return comments;
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+    //get comment by id
+    public Optional<Comment> getCommentById(Long commentId) {
+        if(!commentRepository.existsById(commentId)) {
+            throw new RuntimeException("Comment not found");
+        }
+        return commentRepository.findById(commentId);
     }
 
-    //get comment by id
-    public Optional<Comment> getCommentById(Long id) {
-        return commentRepository.findById(id);
-    }
     //add comment
-    public void addComment(Comment comment) {
-        commentRepository.save(comment);
+    public Comment addComment(Comment comment) {
+        comment = commentRepository.save(comment);
+        return(comment);
     }
 
     //delete comment
-    public void deleteComment(Long id) {
-        commentRepository.deleteById(id);
+    public void deleteComment(Long commentId) {
+        if(!commentRepository.existsById(commentId)){
+            throw new RuntimeException("comment not found");
+        } else {
+            commentRepository.deleteById(commentId);
+        }
     }
+
 }

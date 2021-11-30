@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.RecipeNotFoundException;
+import com.example.demo.model.Comment;
 import com.example.demo.model.Recipe;
 import com.example.demo.model.User;
 import com.example.demo.repository.AuthRoleRepository;
@@ -84,8 +85,16 @@ public class RecipeService {
             recipe.setBlockRecipe(blockRecipe.isBlockRecipe());
             recipeRepository.save(recipe);
         }
+    }
 
-
+    //getCommentsFromRecipeById
+    public Iterable<Comment> getCommentsByRecipeId(Long recipeId) {
+        Optional<Recipe> recipe = recipeRepository.findById(recipeId);
+        if(recipe.isPresent()) {
+            return recipe.get().getComments();
+        } else {
+            throw new RuntimeException("Recipe with all the comments is not found");
+        }
     }
 
 }

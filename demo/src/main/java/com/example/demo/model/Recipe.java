@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,16 +29,20 @@ public class Recipe {
     @Column(nullable= false, columnDefinition = "boolean default false")
     private boolean blockRecipe = false;
 
+//    @JsonIgnore
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @JsonIgnore
     @OneToMany(
             targetEntity = Comment.class,
             mappedBy = "recipes",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
+
     private List<Comment> comments;
 
     public Long getRecipeId() {
@@ -98,4 +105,7 @@ public class Recipe {
         this.user = user;
     }
 
+    public Iterable<Comment> getComments() {
+        return comments;
+    }
 }

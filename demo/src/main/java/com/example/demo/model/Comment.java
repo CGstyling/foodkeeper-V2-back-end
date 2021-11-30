@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,10 +16,12 @@ public class Comment {
     @Column(length = 5000, nullable = false)
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+   @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "RECIPE_ID")
     private Recipe recipes;

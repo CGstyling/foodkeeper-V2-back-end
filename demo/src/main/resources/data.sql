@@ -21,7 +21,7 @@ VALUES ('koken en bakken','kaas en tomaat', true ,'vega', 1),
 INSERT INTO comments (comment_id, comment, recipe_id, user_id)
 VALUES (1, 'dit was lekker', 1, 3),
        (2, 'niet was niet lekker', 4, 1),
-       (3, 'dit ga ik aanraden', 3, 3);
+       (3, 'dit ga ik aanraden', 1, 2);
 
 
 

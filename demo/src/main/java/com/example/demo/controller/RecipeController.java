@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Comment;
 import com.example.demo.model.Recipe;
 import com.example.demo.service.RecipeService;
 import com.example.demo.service.UserService;
@@ -58,5 +59,12 @@ public class RecipeController {
     @PreAuthorize("hasRole('ADMIN')")
     public void blockRecipe(@PathVariable Long recipeId, @RequestBody Recipe recipe) {
         recipeService.blockRecipe(recipe, recipeId);
+    }
+
+    @GetMapping("/recipes/{recipeId}/comments")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity getCommentsByRecipeId(@PathVariable Long recipeId) {
+        Iterable<Comment> recipeComments = recipeService.getCommentsByRecipeId(recipeId);
+        return ResponseEntity.ok(recipeComments);
     }
 }
