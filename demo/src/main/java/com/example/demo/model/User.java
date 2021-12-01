@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -25,7 +26,8 @@ public class User {
     @Column(length = 125, nullable = false)
     private String password;
 
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(
             targetEntity = Recipe.class,
             mappedBy = "user",
@@ -34,7 +36,8 @@ public class User {
     )
     private List<Recipe> recipes;
 
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonBackReference
     @OneToMany(
             targetEntity = Comment.class,
             mappedBy = "user",
