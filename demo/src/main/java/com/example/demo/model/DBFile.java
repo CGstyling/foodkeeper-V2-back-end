@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,6 +20,12 @@ public class DBFile {
 
     @Lob
     private byte[] data;
+
+//    @JsonManagedReference(value = "recipe-file")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
+
 
     public DBFile() {
     }
@@ -52,5 +59,11 @@ public class DBFile {
     }
     public void setData(byte[] data) {
         this.data = data;
+    }
+    public Recipe getRecipe() {
+        return recipe;
+    }
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

@@ -26,8 +26,8 @@ public class User {
     @Column(length = 125, nullable = false)
     private String password;
 
-//    @JsonIgnore
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonBackReference(value = "user-recipe")
     @OneToMany(
             targetEntity = Recipe.class,
             mappedBy = "user",
@@ -36,8 +36,8 @@ public class User {
     )
     private List<Recipe> recipes;
 
-//    @JsonIgnore
-    @JsonBackReference
+    @JsonIgnore
+   //@JsonBackReference(value = "user-comments")
     @OneToMany(
             targetEntity = Comment.class,
             mappedBy = "user",
@@ -46,7 +46,7 @@ public class User {
     )
     private List<Comment> comments;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
