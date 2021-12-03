@@ -54,13 +54,13 @@ public class UserService {
     }
 
     //delete user
-    public void deleteUser(Long userId) {
-        if(!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found");
-        } else {
-            userRepository.deleteById(userId);
-        }
-    }
+//    public void deleteUser(Long userId) {
+//        if(!userRepository.existsById(userId)) {
+//            throw new UserNotFoundException("User not found");
+//        } else {
+//            userRepository.deleteById(userId);
+//        }
+//    }
 
     //getRecipesByUserId
     public Iterable<Recipe> getRecipesByUserId(Long userId) {

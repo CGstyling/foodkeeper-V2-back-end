@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,6 +21,8 @@ public class Recipe {
 
     @Column(length = 5000, nullable = false)
     private String recipeDescription;
+
+    private String recipeFile;
 
     @Column(nullable= false)
     private boolean recipeIsPrivate;
@@ -47,8 +47,8 @@ public class Recipe {
     private List<Comment> comments;
 
 //    @JsonBackReference(value = "recipe-file")
-    @OneToOne
-    private DBFile dbFile;
+//    @OneToOne
+//    private DBFile dbFile;
 
     public Long getRecipeId() {
         return recipeId;
@@ -73,6 +73,12 @@ public class Recipe {
     }
     public void setRecipeDescription(String recipeDescription) {
         this.recipeDescription = recipeDescription;
+    }
+    public String getRecipeFile() {
+        return recipeFile;
+    }
+    public void setRecipeFile(String recipeFile) {
+        this.recipeFile = recipeFile;
     }
     public boolean isRecipeIsPrivate() {
         return recipeIsPrivate;
@@ -101,10 +107,5 @@ public class Recipe {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-    public DBFile getDbFile() {
-        return dbFile;
-    }
-    public void setDbFile(DBFile dbFile) {
-        this.dbFile = dbFile;
-    }
+
 }

@@ -21,10 +21,10 @@ public class DBFile {
     @Lob
     private byte[] data;
 
-//    @JsonManagedReference(value = "recipe-file")
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "recipe_id")
-    private Recipe recipe;
+
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "recipe_id")
+//    private Recipe recipe;
 
 
     public DBFile() {
@@ -59,11 +59,5 @@ public class DBFile {
     }
     public void setData(byte[] data) {
         this.data = data;
-    }
-    public Recipe getRecipe() {
-        return recipe;
-    }
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
     }
 }
