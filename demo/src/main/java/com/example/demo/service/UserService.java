@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -66,7 +67,10 @@ public class UserService {
     public Iterable<Recipe> getRecipesByUserId(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) {
-            return user.get().getRecipes();
+            List<Recipe> recipeList = user.get().getRecipes();
+            return recipeList.stream()
+                    .distinct()
+                    .collect( Collectors.toList() );
         }else {
             throw new RecipeNotFoundException("User with all the recipes is not found");
         }

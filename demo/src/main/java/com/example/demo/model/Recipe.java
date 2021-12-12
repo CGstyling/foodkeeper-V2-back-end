@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "recipes")
@@ -30,14 +31,12 @@ public class Recipe {
     @Column(nullable= false, columnDefinition = "boolean default false")
     private boolean blockRecipe = false;
 
-//    @JsonIgnore
-//    @JsonManagedReference(value = "user-recipe")
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
 
     @JsonIgnore
-//    @JsonBackReference(value = "recipe-comment")
     @OneToMany(
             targetEntity = Comment.class,
             mappedBy = "recipes",
@@ -46,9 +45,6 @@ public class Recipe {
     )
     private List<Comment> comments;
 
-//    @JsonBackReference(value = "recipe-file")
-//    @OneToOne
-//    private DBFile dbFile;
 
     public Long getRecipeId() {
         return recipeId;
@@ -108,4 +104,20 @@ public class Recipe {
         this.comments = comments;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(recipeId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Recipe other = (Recipe) obj;
+        return Objects.equals(recipeId, other.recipeId);
+    }
 }
