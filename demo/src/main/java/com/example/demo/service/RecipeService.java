@@ -32,6 +32,13 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
+     public List<Recipe> getAllPublicRecipes() {
+         List<Recipe> recipeList = recipeRepository.findAll();
+         recipeList.removeIf(Recipe::isRecipeIsPrivate);
+         recipeList.removeIf(Recipe::isBlockRecipe);
+         return recipeList;
+    }
+
     //get recipe by id
     public Optional<Recipe> getRecipeById(Long recipeId) {
         if(!recipeRepository.existsById(recipeId)){
@@ -111,6 +118,8 @@ public class RecipeService {
             throw new RuntimeException("Recipe with all the comments is not found");
         }
     }
+
+
 
 
 

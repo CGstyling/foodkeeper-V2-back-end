@@ -26,9 +26,15 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Recipe> getAllRecipes() {
         return recipeService.getAllRecipes();
+    }
+
+    @GetMapping("/publicRecipes")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public List<Recipe> getAllPublicRecipes() {
+        return recipeService.getAllPublicRecipes();
     }
 
     @GetMapping("/recipes/{recipeId}")
