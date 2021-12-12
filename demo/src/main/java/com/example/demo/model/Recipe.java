@@ -97,7 +97,7 @@ public class Recipe {
     public void setUser(User user) {
         this.user = user;
     }
-    public Iterable<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
     public void setComments(List<Comment> comments) {

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -111,9 +112,13 @@ public class RecipeService {
                         }
                     }
                 }
-                return filteredCommentList;
+                 return filteredCommentList.stream()
+                    .distinct()
+                    .collect( Collectors.toList() );
             }
-            return recipe.get().getComments();
+            return recipe.get().getComments().stream()
+                    .distinct()
+                    .collect( Collectors.toList() );
         } else {
             throw new RuntimeException("Recipe with all the comments is not found");
         }

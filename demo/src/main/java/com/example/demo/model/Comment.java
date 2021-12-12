@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "comments")
@@ -57,5 +58,22 @@ public class Comment {
 
     public void setRecipes(Recipe recipes) {
         this.recipes = recipes;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(commentId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Comment other = (Comment) obj;
+        return Objects.equals(commentId, other.commentId);
     }
 }
