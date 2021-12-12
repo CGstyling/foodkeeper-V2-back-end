@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.RecipeNotFoundException;
-import com.example.demo.model.Comment;
-import com.example.demo.model.Recipe;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import com.example.demo.repository.AuthRoleRepository;
 import com.example.demo.repository.RecipeRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RecipeService {
@@ -91,6 +91,21 @@ public class RecipeService {
     public Iterable<Comment> getCommentsByRecipeId(Long recipeId) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if(recipe.isPresent()) {
+            if(recipe.get().isBlockRecipe())
+            {
+                List<Comment> filteredCommentList = new ArrayList<>();
+                for (Comment comment : recipe.get().getComments()) {
+                    Set<AuthRole> authRoleSet = comment.getUser().getAuthRoles();
+                    for (AuthRole authRole : authRoleSet) {
+                        if(authRole.getRoleName().equals(EAuthRole.ROLE_ADMIN))
+                        {
+                            filteredCommentList.add(comment);
+                            break;
+                        }
+                    }
+                }
+                return filteredCommentList;
+            }
             return recipe.get().getComments();
         } else {
             throw new RuntimeException("Recipe with all the comments is not found");

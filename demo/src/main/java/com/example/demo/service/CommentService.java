@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.model.AuthRole;
 import com.example.demo.model.Comment;
+import com.example.demo.model.EAuthRole;
 import com.example.demo.model.Recipe;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.RecipeRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CommentService {
@@ -26,6 +29,7 @@ public class CommentService {
     public List<Comment> getAllComments() {
         return commentRepository.findAll();
     }
+
     //get comment by id
     public Optional<Comment> getCommentById(Long commentId) {
         if(!commentRepository.existsById(commentId)) {
