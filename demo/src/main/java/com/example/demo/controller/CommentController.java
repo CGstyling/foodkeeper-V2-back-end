@@ -37,7 +37,7 @@ public class CommentController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> addComment(@RequestBody Comment comment) {
         commentService.addComment(comment);
-        return ResponseEntity.ok("comment aangemaakt");
+        return ResponseEntity.ok("A comment is made!");
     }
 
     @DeleteMapping("/comments/{commentId}")

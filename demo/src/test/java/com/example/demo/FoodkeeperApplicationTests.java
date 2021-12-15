@@ -1,13 +1,20 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
-@SpringBootTest
-class FoodkeeperApplicationTests {
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+@SpringBootTest()
+@ContextConfiguration(classes={FoodkeeperApplication.class})
+public class FoodkeeperApplicationTests {
 
 	@Test
-	void contextLoads() {
+	@DisplayName("Testing if context is correctly set")
+	void ContextLoadsTest() {
+		assertNotEquals(1, 2);
 	}
 
 }
