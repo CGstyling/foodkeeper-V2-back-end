@@ -42,13 +42,12 @@ public class User {
     )
     private List<Comment> comments;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name ="user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_role_id"))
-    private Set<AuthorityRole> authorityRoles = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
+    private Set<AuthRole> authRoles = new HashSet<>();
 
     public User() {
     }
@@ -61,55 +60,42 @@ public class User {
     public Long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public List<Recipe> getRecipes() {
         return recipes;
     }
-
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
-
-    public Set<AuthorityRole> getAuthorityRoles() {
-        return authorityRoles;
+    public Set<AuthRole> getAuthRoles() {
+        return authRoles;
     }
-
-    public void setAuthorityRoles(Set<AuthorityRole> authorityRoles) {
-        this.authorityRoles = authorityRoles;
+    public void setAuthRoles(Set<AuthRole> authRoles) {
+        this.authRoles = authRoles;
     }
-
     public List<Comment> getComments() {
         return comments;
     }
-
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
