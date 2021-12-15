@@ -103,12 +103,10 @@ public class Recipe {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(recipeId);
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

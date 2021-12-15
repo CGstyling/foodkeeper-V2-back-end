@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.response.UploadFileResponse;
 import com.example.demo.model.DBFile;
-
 import com.example.demo.service.DBFileStorageService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +29,6 @@ public class FileController {
         this.dbFileStorageService = dbFileStorageService;
     }
 
-    //Upload an Image
     @PostMapping("/uploadFile")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
@@ -43,7 +40,6 @@ public class FileController {
         return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, file.getContentType(), file.getSize());
     }
 
-    //download Image by ID
     @GetMapping(value = "/downloadFile/{fileId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Resource> downloadFile (@PathVariable String fileId) {

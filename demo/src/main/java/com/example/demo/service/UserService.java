@@ -25,26 +25,22 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    //get all users
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    //get user by id
     public Optional<User> getUserById(Long userId) {
         if(!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("Sorry, user not found");
         }
         return userRepository.findById(userId);
     }
 
-
-    //update user
     public void updateUser(Long userId, User updateUser) {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if(userOptional.isEmpty()) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("Sorry, user not found");
         } else {
             User user = userOptional.get();
             user.setUsername(updateUser.getUsername());
@@ -54,16 +50,6 @@ public class UserService {
         }
     }
 
-    //delete user
-//    public void deleteUser(Long userId) {
-//        if(!userRepository.existsById(userId)) {
-//            throw new UserNotFoundException("User not found");
-//        } else {
-//            userRepository.deleteById(userId);
-//        }
-//    }
-
-    //getRecipesByUserId
     public Iterable<Recipe> getRecipesByUserId(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) {
@@ -72,7 +58,7 @@ public class UserService {
                     .distinct()
                     .collect( Collectors.toList() );
         }else {
-            throw new RecipeNotFoundException("User with all the recipes is not found");
+            throw new RecipeNotFoundException("Sorry, we could not find your recipes. Please try again!");
         }
     }
 }

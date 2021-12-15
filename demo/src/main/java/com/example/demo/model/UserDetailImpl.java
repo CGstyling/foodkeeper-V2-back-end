@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.example.demo.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +12,6 @@ import java.util.stream.Collectors;
 public class UserDetailImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-
     private final Long userId;
     private final String username;
     private final String email;
@@ -80,7 +78,6 @@ public class UserDetailImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)

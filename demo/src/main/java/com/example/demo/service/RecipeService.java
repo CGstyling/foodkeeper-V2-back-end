@@ -28,7 +28,7 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    //get all recipes
+
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
@@ -40,28 +40,24 @@ public class RecipeService {
          return recipeList;
     }
 
-    //get recipe by id
     public Optional<Recipe> getRecipeById(Long recipeId) {
         if(!recipeRepository.existsById(recipeId)){
-            throw new RecipeNotFoundException("Recipe is not found");
+            throw new RecipeNotFoundException("Sorry, Recipe is not found");
         }
         return recipeRepository.findById(recipeId);
     }
 
-    //add recipe
     public Recipe addRecipe(Recipe recipe) {
        recipe = recipeRepository.save(recipe);
        return(recipe);
-        //=> INSERT INTO recipes (..,..,) VALUES ('','','')
     }
 
-    //update recipe
     public void updateRecipe(Recipe updateRecipe, Long recipeId) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if(recipeOptional.isEmpty()) {
-            throw new RecipeNotFoundException("recipe not found");
+            throw new RecipeNotFoundException("Sorry, recipe not found");
         } else {
             Recipe recipe = recipeOptional.get();
             recipe.setRecipeName(updateRecipe.getRecipeName());
@@ -72,22 +68,20 @@ public class RecipeService {
         }
     }
 
-    //delete delete
     public void deleteRecipe(Long recipeId) {
         if(!recipeRepository.existsById(recipeId)){
-            throw new RecipeNotFoundException("Recipe not found");
+            throw new RecipeNotFoundException("Sorry, Recipe not found");
         }else {
             recipeRepository.deleteById(recipeId);
         }
     }
 
-    //block recipe (admin only)
     public void blockRecipe(Recipe blockRecipe, Long recipeId) {
 
         Optional<Recipe> blockOptionalRecipe = recipeRepository.findById(recipeId);
 
         if(blockOptionalRecipe.isEmpty()) {
-            throw new RecipeNotFoundException("recipe not found");
+            throw new RecipeNotFoundException("Sorry, recipe not found");
         } else {
             Recipe recipe = blockOptionalRecipe.get();
             recipe.setBlockRecipe(blockRecipe.isBlockRecipe());
@@ -95,7 +89,6 @@ public class RecipeService {
         }
     }
 
-    //getCommentsFromRecipeById
     public Iterable<Comment> getCommentsByRecipeId(Long recipeId) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if(recipe.isPresent()) {
@@ -120,12 +113,7 @@ public class RecipeService {
                     .distinct()
                     .collect( Collectors.toList() );
         } else {
-            throw new RuntimeException("Recipe with all the comments is not found");
+            throw new RuntimeException("Recipe with the comments from the recipe is not found");
         }
     }
-
-
-
-
-
 }

@@ -73,16 +73,14 @@ public class AuthRoleController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUpUser(@RequestBody UserSignUpRequest userSignUpRequest) {
 
-        //check if user exist
         if(userRepository.existsByUsername(userSignUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body("ERROR: Username is taken");
+            return ResponseEntity.badRequest().body("Sorry, this username is already taken");
         }
 
         if(userRepository.existsByEmail(userSignUpRequest.getEmail())) {
-            return ResponseEntity.badRequest().body("ERROR: Email is taken");
+            return ResponseEntity.badRequest().body("Sorry, this email is already taken");
         }
 
-        //Create new user and give role
         User user = new User(
                 userSignUpRequest.getUsername(),
                 userSignUpRequest.getEmail(),
@@ -93,17 +91,17 @@ public class AuthRoleController {
 
         if(setRoles== null) {
             AuthRole userRole = authRoleRepository.findByRoleName(EAuthRole.ROLE_USER)
-                    .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
+                    .orElseThrow(() -> new UserNotFoundException("User is not found"));
             authRoles.add(userRole);
         } else {
             setRoles.forEach(role -> {
                 if ("admin".equals(role)) {
                     AuthRole adminRole = authRoleRepository.findByRoleName(EAuthRole.ROLE_ADMIN)
-                            .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
+                            .orElseThrow(() -> new UserNotFoundException("User is not found"));
                     authRoles.add(adminRole);
                 } else {
                     AuthRole userRole = authRoleRepository.findByRoleName(EAuthRole.ROLE_USER)
-                            .orElseThrow(() -> new UserNotFoundException("ERROR: User role is not found."));
+                            .orElseThrow(() -> new UserNotFoundException("User is not found"));
                     authRoles.add(userRole);
                 }
             });

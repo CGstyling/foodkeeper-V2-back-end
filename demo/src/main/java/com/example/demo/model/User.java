@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,7 +25,6 @@ public class User {
     private String password;
 
     @JsonIgnore
-//    @JsonBackReference(value = "user-recipe")
     @OneToMany(
             targetEntity = Recipe.class,
             mappedBy = "user",
@@ -37,7 +34,6 @@ public class User {
     private List<Recipe> recipes;
 
     @JsonIgnore
-   //@JsonBackReference(value = "user-comments")
     @OneToMany(
             targetEntity = Comment.class,
             mappedBy = "user",
@@ -46,7 +42,6 @@ public class User {
     )
     private List<Comment> comments;
 
-//    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -65,55 +60,42 @@ public class User {
     public Long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public List<Recipe> getRecipes() {
         return recipes;
     }
-
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
-
     public Set<AuthRole> getAuthRoles() {
         return authRoles;
     }
-
     public void setAuthRoles(Set<AuthRole> authRoles) {
         this.authRoles = authRoles;
     }
-
     public List<Comment> getComments() {
         return comments;
     }
-
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }

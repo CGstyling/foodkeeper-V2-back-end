@@ -47,7 +47,7 @@ public class RecipeController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> addRecipe(@RequestBody Recipe recipe) {
         recipeService.addRecipe(recipe);
-        return ResponseEntity.ok("recept is aangemaakt");
+        return ResponseEntity.ok("User made a recipe!");
     }
 
     @DeleteMapping("/recipes/{recipeId}")

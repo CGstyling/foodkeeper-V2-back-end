@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,12 +18,6 @@ public class DBFile {
 
     @Lob
     private byte[] data;
-
-
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "recipe_id")
-//    private Recipe recipe;
-
 
     public DBFile() {
     }

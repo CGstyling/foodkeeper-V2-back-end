@@ -10,22 +10,19 @@ public class AuthRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authRoleId;
 
-    @Enumerated(EnumType.STRING) //make string from the roles
+    @Enumerated(EnumType.STRING)
     @Column(length = 25)
     private EAuthRole roleName;
 
     public Long getAuthRoleId() {
         return authRoleId;
     }
-
     public void setAuthRoleId(Long authRoleId) {
         this.authRoleId = authRoleId;
     }
-
     public EAuthRole getRoleName() {
         return roleName;
     }
-
     public void setRoleName(EAuthRole roleName) {
         this.roleName = roleName;
     }

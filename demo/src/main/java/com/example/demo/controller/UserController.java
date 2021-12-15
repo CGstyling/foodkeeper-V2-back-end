@@ -34,12 +34,6 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-//    @DeleteMapping("/users/{userId}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public void deleteUser(@PathVariable Long userId) {
-//        userService.deleteUser(userId);
-//    }
-
     @PutMapping("/users/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public void updateUser(@PathVariable Long userId, @RequestBody User user) {
