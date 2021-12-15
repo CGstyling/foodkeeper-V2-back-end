@@ -12,16 +12,16 @@ INSERT INTO user_roles(user_id, auth_role_id) VALUES ('2', '1');
 INSERT INTO user_roles(user_id, auth_role_id) VALUES ('3', '1');
 INSERT INTO user_roles(user_id, auth_role_id) VALUES ('4', '1');
 
-INSERT INTO recipes (recipe_description, recipe_ingredient, recipe_is_private, recipe_name, user_id)
-VALUES ('koken en bakken','kaas en tomaat', true ,'vega', 2),
-       ('waterkoken','spagettie', false ,'spagettie citroen', 2),
-       ('oven aanzetten..','pizzadeeg', true ,'pizza tonno', 2),
-       ('pan op het vuur','karbonade', false ,'hollandse keuken', 2);
-
-INSERT INTO comments (comment, recipe_id, user_id)
-VALUES ('dit was lekker', 1, 3),
-       ('niet was niet lekker', 4, 3),
-       ('dit ga ik aanraden', 1, 2);
+-- INSERT INTO recipes (recipe_description, recipe_ingredient, recipe_is_private, recipe_name, user_id)
+-- VALUES ('koken en bakken','kaas en tomaat', true ,'vega', 2),
+--        ('waterkoken','spagettie', false ,'spagettie citroen', 2),
+--        ('oven aanzetten..','pizzadeeg', true ,'pizza tonno', 2),
+--        ('pan op het vuur','karbonade', false ,'hollandse keuken', 2);
+--
+-- INSERT INTO comments (comment, recipe_id, user_id)
+-- VALUES ('dit was lekker', 1, 3),
+--        ('niet was niet lekker', 4, 3),
+--        ('dit ga ik aanraden', 1, 2);
 
 
 
